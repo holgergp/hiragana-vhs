@@ -1,0 +1,16 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Branch deploy settings
+# Netlify auto-detects branch deploys when connected to Git.
+# You can control this in the UI under:
+# Site configuration → Build & deploy → Branches and deploy contexts
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

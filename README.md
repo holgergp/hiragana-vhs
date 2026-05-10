@@ -1,5 +1,7 @@
 # 🎌 Hiragana Lernapp — みんなの日本語 A1.1.1
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/b886b5dd-2fef-4dc8-9a77-3030ba18d427/deploy-status)](https://app.netlify.com/projects/hiragana-vhs/deploys)
+
 Eine interaktive Lernapp für Hiragana, begleitend zum Japanischkurs A1.1.1 der VHS Düsseldorf mit dem Lehrbuch **Minna no Nihongo**.
 
 🔗 **[→ App öffnen](https://holgergp.github.io/hiragana-vhs/)**
@@ -23,4 +25,12 @@ npm run dev
 
 - [React 19](https://react.dev/)
 - [Vite](https://vitejs.dev/)
-- Deployment via [GitHub Pages](https://pages.github.com/)
+- Deployment via [GitHub Pages](https://pages.github.com/) & [Netlify](https://www.netlify.com/)
+
+## Netlify Branch Deployments
+
+Jeder Push auf einen beliebigen Branch erzeugt eine eigene Deploy-Preview:
+
+1. Repository auf [Netlify](https://app.netlify.com/) importieren
+2. Unter **Site configuration → Build & deploy → Branches** "Branch deploys" aktivieren
+3. Fertig — jedes Pull Request und jeder Branch bekommen eine eigene URL
