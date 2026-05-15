@@ -85,6 +85,72 @@ const HIRAGANA_DATA = [
   { char: "ぽ", rom: "po", group: "p", lesson: 2 },
 ];
 
+const WORD_DATA = [
+  // Begrüßungen und Ausdrücke
+  { word: "すみません", rom: "sumimasen", german: "Entschuldigung / Tut mir leid", lesson: 1 },
+  { word: "おはよう", rom: "ohayou", german: "Guten Morgen", lesson: 1 },
+  { word: "こんにちは", rom: "konnichiwa", german: "Guten Tag", lesson: 1 },
+  { word: "さようなら", rom: "sayounara", german: "Auf Wiedersehen", lesson: 1 },
+  { word: "おやすみ", rom: "oyasumi", german: "Gute Nacht", lesson: 1 },
+  { word: "はい", rom: "hai", german: "Ja", lesson: 1 },
+  { word: "いいえ", rom: "iie", german: "Nein", lesson: 1 },
+  // Personen
+  { word: "わたし", rom: "watashi", german: "ich", lesson: 1 },
+  { word: "あなた", rom: "anata", german: "du", lesson: 1 },
+  { word: "かれ", rom: "kare", german: "er", lesson: 1 },
+  { word: "ひと", rom: "hito", german: "Person", lesson: 1 },
+  { word: "おんな", rom: "onna", german: "Frau", lesson: 1 },
+  { word: "おとこ", rom: "otoko", german: "Mann", lesson: 1 },
+  { word: "せんせい", rom: "sensei", german: "Lehrer", lesson: 1 },
+  // Tiere
+  { word: "いぬ", rom: "inu", german: "Hund", lesson: 1 },
+  { word: "ねこ", rom: "neko", german: "Katze", lesson: 1 },
+  { word: "さかな", rom: "sakana", german: "Fisch", lesson: 1 },
+  // Essen und Natur
+  { word: "のみもの", rom: "nomimono", german: "Getränk", lesson: 1 },
+  { word: "やさい", rom: "yasai", german: "Gemüse", lesson: 1 },
+  // Körper
+  { word: "て", rom: "te", german: "Hand", lesson: 1 },
+  { word: "あし", rom: "ashi", german: "Fuß", lesson: 1 },
+  { word: "め", rom: "me", german: "Auge", lesson: 1 },
+  { word: "みみ", rom: "mimi", german: "Ohr", lesson: 1 },
+  { word: "はな", rom: "hana", german: "Nase", lesson: 1 },
+  { word: "くち", rom: "kuchi", german: "Mund", lesson: 1 },
+  { word: "あたま", rom: "atama", german: "Kopf", lesson: 1 },
+  // Zahlen
+  { word: "いち", rom: "ichi", german: "eins", lesson: 1 },
+  { word: "に", rom: "ni", german: "zwei", lesson: 1 },
+  { word: "さん", rom: "san", german: "drei", lesson: 1 },
+  { word: "よん", rom: "yon", german: "vier", lesson: 1 },
+  { word: "ろく", rom: "roku", german: "sechs", lesson: 1 },
+  { word: "なな", rom: "nana", german: "sieben", lesson: 1 },
+  { word: "はち", rom: "hachi", german: "acht", lesson: 1 },
+  // Fragewörter und Sonstiges
+  { word: "なに", rom: "nani", german: "was", lesson: 1 },
+  { word: "いくら", rom: "ikura", german: "wie viel / wie teuer", lesson: 1 },
+  { word: "たいへん", rom: "taihen", german: "sehr / schlimm", lesson: 1 },
+  // Alltagsgegenstände und Orte
+  { word: "ほん", rom: "hon", german: "Buch", lesson: 1 },
+  { word: "かさ", rom: "kasa", german: "Regenschirm", lesson: 1 },
+  { word: "くるま", rom: "kuruma", german: "Auto", lesson: 1 },
+  { word: "ひこうき", rom: "hikouki", german: "Flugzeug", lesson: 1 },
+  { word: "ふね", rom: "fune", german: "Schiff", lesson: 1 },
+  { word: "いす", rom: "isu", german: "Stuhl", lesson: 1 },
+  { word: "つくえ", rom: "tsukue", german: "Tisch", lesson: 1 },
+  { word: "とけい", rom: "tokei", german: "Uhr", lesson: 1 },
+  { word: "くつ", rom: "kutsu", german: "Schuhe", lesson: 1 },
+  { word: "ふく", rom: "fuku", german: "Kleidung", lesson: 1 },
+  { word: "こうえん", rom: "kouen", german: "Park", lesson: 1 },
+  { word: "まち", rom: "machi", german: "Stadt", lesson: 1 },
+  { word: "みせ", rom: "mise", german: "Geschäft", lesson: 1 },
+  { word: "いま", rom: "ima", german: "jetzt", lesson: 1 },
+  { word: "あさ", rom: "asa", german: "Morgen", lesson: 1 },
+  { word: "ひる", rom: "hiru", german: "Mittag", lesson: 1 },
+  { word: "よる", rom: "yoru", german: "Nacht", lesson: 1 },
+  { word: "いえ", rom: "ie", german: "Haus", lesson: 1 },
+  { word: "うち", rom: "uchi", german: "Zuhause", lesson: 1 },
+];
+
 const GROUP_LABELS = {
   vowels: "Vokale",
   k: "か行 (K)",
@@ -387,6 +453,22 @@ const css = `
     justify-content: center;
     letter-spacing: 0.05em;
   }
+
+  .quiz-big-word {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    color: #f5f0e8;
+    line-height: 1.2;
+    display: block;
+    margin: 0.2rem 0 0.5rem;
+  }
+  .quiz-sub-label {
+    font-size: 13px;
+    color: #888;
+    margin-top: 0.5rem;
+  }
+  .opt-word {
+    font-size: 22px;
+  }
 `;
 
 // ── Overview Component ───────────────────────────────────────────────────────
@@ -604,6 +686,169 @@ function Quiz({ mode }) {
   );
 }
 
+// ── Word Quiz Component ────────────────────────────────────────────────────
+function WordQuiz({ mode }) {
+  // mode: "char2rom" = zeige Hiragana-Wort, wähle Aussprache
+  //       "rom2char" = zeige Aussprache, wähle Hiragana-Wort
+  const [lessonFilter, setLessonFilter] = useState("1");
+  const [score, setScore] = useState({ correct: 0, total: 0 });
+  const [question, setQuestion] = useState(null);
+  const [selected, setSelected] = useState(null);
+  const [feedback, setFeedback] = useState(null);
+  const [optionsVisible, setOptionsVisible] = useState(false);
+  const [countdown, setCountdown] = useState(3);
+
+  const pool =
+    lessonFilter === "all"
+      ? WORD_DATA
+      : WORD_DATA.filter((w) => w.lesson === Number(lessonFilter));
+
+  const makeQuestion = useCallback(() => {
+    const correct = shuffle(pool)[0];
+    const wrongs = getWrongOptions(correct, pool, 2);
+    const options = shuffle([correct, ...wrongs]);
+    setQuestion({ correct, options });
+  }, [pool]);
+
+  useEffect(() => {
+    if (!question) return;
+
+    setSelected(null);
+    setFeedback(null);
+    setOptionsVisible(false);
+    setCountdown(3);
+
+    let intervalId;
+    intervalId = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(intervalId);
+          setOptionsVisible(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [question]);
+
+  if (!question) {
+    makeQuestion();
+    return null;
+  }
+
+  const handleSelect = (opt) => {
+    if (selected) return;
+    setSelected(opt);
+    const isCorrect = opt.rom === question.correct.rom;
+    setFeedback(
+      isCorrect ? "Richtig! ✓" : `Falsch — es war „${question.correct.rom}"`,
+    );
+    setScore((s) => ({
+      correct: s.correct + (isCorrect ? 1 : 0),
+      total: s.total + 1,
+    }));
+  };
+
+  const accuracy =
+    score.total === 0
+      ? "—"
+      : Math.round((score.correct / score.total) * 100) + "%";
+
+  return (
+    <div className="quiz-wrap">
+      <div className="lesson-filter-quiz">
+        {["1", "all"].map((l) => (
+          <button
+            key={l}
+            className={`filter-pill ${lessonFilter === l ? "active" : ""}`}
+            onClick={() => {
+              setLessonFilter(l);
+              setQuestion(null);
+              setScore({ correct: 0, total: 0 });
+            }}
+          >
+            {l === "1" ? "Lektion 1" : "Alle Wörter"}
+          </button>
+        ))}
+      </div>
+
+      <div className="quiz-score-bar">
+        <div className="score-pill">
+          Richtig <span>{score.correct}</span>
+        </div>
+        <div className="score-pill">
+          Gesamt <span>{score.total}</span>
+        </div>
+        <div className="score-pill">
+          Quote <span>{accuracy}</span>
+        </div>
+      </div>
+
+      <div className="quiz-card">
+        <div className="quiz-prompt-label">
+          {mode === "char2rom"
+            ? "Wie lautet die Aussprache?"
+            : "Welches Wort ist das?"}
+        </div>
+        {mode === "char2rom" ? (
+          <span className="quiz-big-word">{question.correct.word}</span>
+        ) : (
+          <span className="quiz-big-rom">{question.correct.rom}</span>
+        )}
+        <div className="quiz-sub-label">
+          Deutsche Bedeutung: {question.correct.german}
+        </div>
+      </div>
+
+      <div className="options-grid">
+        {optionsVisible ? (
+          question.options.map((opt) => {
+            let cls = "opt-btn";
+            if (selected) {
+              if (opt.rom === question.correct.rom) cls += " correct";
+              else if (opt.rom === selected.rom) cls += " wrong";
+            }
+            return (
+              <button
+                key={opt.word + opt.rom}
+                className={cls}
+                onClick={() => handleSelect(opt)}
+                disabled={!!selected}
+              >
+                {mode === "char2rom" ? (
+                  <span className="opt-rom">{opt.rom}</span>
+                ) : (
+                  <span className="opt-word">{opt.word}</span>
+                )}
+              </button>
+            );
+          })
+        ) : (
+          <div className="countdown-placeholder">
+            Antworten in {countdown}...
+          </div>
+        )}
+      </div>
+
+      {feedback && (
+        <div
+          className={`quiz-feedback ${selected?.rom === question.correct.rom ? "ok" : "err"}`}
+        >
+          {feedback}
+        </div>
+      )}
+
+      {selected && (
+        <button className="next-btn" onClick={makeQuestion}>
+          Nächste Frage →
+        </button>
+      )}
+    </div>
+  );
+}
+
 // ── App ──────────────────────────────────────────────────────────────────────
 export default function App() {
   const [tab, setTab] = useState("overview");
@@ -623,6 +868,8 @@ export default function App() {
             { id: "overview", label: "Übersicht", icon: "⊞" },
             { id: "quiz-char", label: "Zeichen → Aussprache", icon: "あ→" },
             { id: "quiz-rom", label: "Aussprache → Zeichen", icon: "→あ" },
+            { id: "quiz-word-char", label: "Wort → Aussprache", icon: "私→" },
+            { id: "quiz-word-rom", label: "Aussprache → Wort", icon: "→私" },
           ].map((t) => (
             <button
               key={t.id}
@@ -638,6 +885,8 @@ export default function App() {
         {tab === "overview" && <Overview />}
         {tab === "quiz-char" && <Quiz key="char2rom" mode="char2rom" />}
         {tab === "quiz-rom" && <Quiz key="rom2char" mode="rom2char" />}
+        {tab === "quiz-word-char" && <WordQuiz key="word-char2rom" mode="char2rom" />}
+        {tab === "quiz-word-rom" && <WordQuiz key="word-rom2char" mode="rom2char" />}
       </div>
     </>
   );
