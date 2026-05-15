@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 const HIRAGANA_DATA = [
   // Vowels (Lektion 1 - erste Zeichen in Minna no Nihongo)
@@ -372,6 +372,21 @@ const css = `
     flex-wrap: wrap;
     justify-content: center;
   }
+
+  .countdown-placeholder {
+    padding: 14px 20px;
+    border-radius: 12px;
+    border: 1px dashed rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.02);
+    color: #666;
+    font-size: 16px;
+    text-align: center;
+    min-height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.05em;
+  }
 `;
 
 // ── Overview Component ───────────────────────────────────────────────────────
@@ -438,6 +453,8 @@ function Quiz({ mode }) {
   const [question, setQuestion] = useState(null);
   const [selected, setSelected] = useState(null);
   const [feedback, setFeedback] = useState(null);
+  const [optionsVisible, setOptionsVisible] = useState(false);
+  const [countdown, setCountdown] = useState(3);
 
   const pool =
     lessonFilter === "all"
@@ -449,9 +466,30 @@ function Quiz({ mode }) {
     const wrongs = getWrongOptions(correct, pool, 2);
     const options = shuffle([correct, ...wrongs]);
     setQuestion({ correct, options });
+  }, [pool]);
+
+  useEffect(() => {
+    if (!question) return;
+
     setSelected(null);
     setFeedback(null);
-  }, [pool]);
+    setOptionsVisible(false);
+    setCountdown(3);
+
+    let intervalId;
+    intervalId = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(intervalId);
+          setOptionsVisible(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [question]);
 
   if (!question) {
     makeQuestion();
@@ -520,27 +558,33 @@ function Quiz({ mode }) {
       </div>
 
       <div className="options-grid">
-        {question.options.map((opt) => {
-          let cls = "opt-btn";
-          if (selected) {
-            if (opt.rom === question.correct.rom) cls += " correct";
-            else if (opt.rom === selected.rom) cls += " wrong";
-          }
-          return (
-            <button
-              key={opt.char + opt.rom}
-              className={cls}
-              onClick={() => handleSelect(opt)}
-              disabled={!!selected}
-            >
-              {mode === "char2rom" ? (
-                <span className="opt-rom">{opt.rom}</span>
-              ) : (
-                <span className="opt-char">{opt.char}</span>
-              )}
-            </button>
-          );
-        })}
+        {optionsVisible ? (
+          question.options.map((opt) => {
+            let cls = "opt-btn";
+            if (selected) {
+              if (opt.rom === question.correct.rom) cls += " correct";
+              else if (opt.rom === selected.rom) cls += " wrong";
+            }
+            return (
+              <button
+                key={opt.char + opt.rom}
+                className={cls}
+                onClick={() => handleSelect(opt)}
+                disabled={!!selected}
+              >
+                {mode === "char2rom" ? (
+                  <span className="opt-rom">{opt.rom}</span>
+                ) : (
+                  <span className="opt-char">{opt.char}</span>
+                )}
+              </button>
+            );
+          })
+        ) : (
+          <div className="countdown-placeholder">
+            Antworten in {countdown}...
+          </div>
+        )}
       </div>
 
       {feedback && (
