@@ -31,8 +31,13 @@ Built as a companion for the **VHS Düsseldorf** Japanese course **A1.1.1** usin
 ```
 ├── public/               (static assets — currently empty)
 ├── src/
-│   ├── App.jsx           # Main application — all logic, components, styles, and Hiragana data
-│   └── main.jsx          # Entry point — renders <App /> in StrictMode
+│   ├── App.jsx           # Tab router, header, styles, Overview component, wrong-count state
+│   ├── data.js           # HIRAGANA_DATA, WORD_DATA, GROUP_LABELS
+│   ├── quizUtils.js      # Pure functions: shuffle, getWrongOptions, pickWeighted
+│   ├── main.jsx          # Entry point — renders <App /> in StrictMode
+│   └── components/
+│       ├── Quiz.jsx      # Hiragana character quiz (char2rom / rom2char)
+│       └── WordQuiz.jsx  # Hiragana word quiz (char2rom / rom2char)
 ├── index.html            # HTML shell — lang="de"
 ├── vite.config.js        # Vite config with conditional base path
 ├── netlify.toml          # Netlify build settings + SPA redirect
@@ -41,13 +46,11 @@ Built as a companion for the **VHS Düsseldorf** Japanese course **A1.1.1** usin
 └── package.json
 ```
 
-**Everything lives in `src/App.jsx`** — there are no separate component files, no `src/components/` directory, and no CSS files.
-
 ---
 
 ## Data Model
 
-Hiragana characters are stored as a flat array `HIRAGANA_DATA` in `App.jsx`:
+Hiragana characters are stored as a flat array `HIRAGANA_DATA` in `data.js`:
 
 ```js
 { char: "あ", rom: "a", group: "vowels", lesson: 1 }
@@ -70,12 +73,13 @@ When modifying data:
 
 ### State Management
 - Pure React `useState` / `useCallback` — no Redux, no Context API.
-- Three top-level tabs: `overview`, `quiz-char`, `quiz-rom`.
+- Top-level tabs: `overview`, `quiz-char`, `quiz-rom`, `quiz-word-char`, `quiz-word-rom`.
 
-### Components (all in App.jsx)
-- `App` — tab router, header, navigation
+### Components
+- `App` — tab router, header, navigation, styles, `wrongCounts` state
 - `Overview` — grid view, lesson filter pills, grouped sections
 - `Quiz` — parameterized for both directions (`mode="char2rom"` | `"rom2char"`)
+- `WordQuiz` — word quiz parameterized for both directions
 
 ### Styling Approach
 All CSS is a single template string injected via `<style>{css}</style>` in `App`.
@@ -93,7 +97,8 @@ If you change styles, keep the existing visual language (dark, minimal, gold acc
 1. **Quiz wrong options** — `getWrongOptions()` picks 2 distractors from the same filtered pool. Always ensure the pool has ≥ 3 items or the function will silently return fewer options.
 2. **Score reset on filter change** — changing the lesson filter inside a quiz resets the score to zero and generates a new question.
 3. **Shuffle uses Fisher-Yates** — questions and options are shuffled in-place on a copy of the array.
-4. **No persistent storage** — scores are lost on page reload (by design, for now).
+4. **Weighted quiz selection** — `pickWeighted()` uses a `wrongCounts` map (key → number of misses). Each miss adds +1 to the weight, so a character with 2 wrong answers is 3× as likely to appear as an unmissed one. Weights are shared across both quiz directions (`char2rom` and `rom2char`).
+5. **No persistent storage** — scores and `wrongCounts` are lost on page reload (by design, for now).
 
 ---
 
@@ -142,7 +147,7 @@ The UI is in **German** because the target learners are German-speaking VHS stud
 
 | Task | Notes |
 |---|---|
-| Add new Hiragana / Katakana | Extend `HIRAGANA_DATA`, add group to `GROUP_LABELS`, update lesson filter options if needed. |
+| Add new Hiragana / Katakana | Extend `HIRAGANA_DATA` in `data.js`, add group to `GROUP_LABELS`, update lesson filter options if needed. |
 | Change styling | Edit the `css` template string in `App.jsx`. |
 | Add a new quiz mode | Parameterize `Quiz` further or add a new tab in `App`. |
 | Add routing | **Don't** — this is a simple 3-tab SPA. |
@@ -152,16 +157,15 @@ The UI is in **German** because the target learners are German-speaking VHS stud
 
 ## Known Issues / Tech Debt
 
-1. **Monolithic `App.jsx`** — logic, data, styles, and all three components in a single ~600-line file. Extraction is needed once it grows past ~800 lines.
-2. **No test coverage** — no unit or integration tests exist. Adding Vitest (Vite-native) is the preferred path if tests are introduced.
-3. **Giant CSS template string** — all styles live in one unscoped template literal. There is no CSS nesting, no auto-prefixing beyond Vite's defaults, and no dead-code elimination for unused rules.
-4. **Hardcoded lesson filters** — filter values like `["all", "1", "2"]` are duplicated in `Overview` and `Quiz`. A single source of truth would prevent drift.
-5. **Silent edge case in quiz generation** — `getWrongOptions()` can return fewer than 2 distractors if the filtered pool has < 3 items. This is not surfaced to the user.
-6. **No persistent storage** — progress and scores are lost on every reload. A `localStorage` layer has been discussed but not implemented.
-7. **Keys derived from content** — `opt.char + opt.rom` is used as a React key in `Quiz`. This is currently safe because the tuple is unique, but it is brittle if duplicates are ever introduced.
-8. **No runtime error boundaries** — an unhandled exception will crash the entire app (white screen) because there is no `<ErrorBoundary>`.
-9. **Accessibility gaps** — focus management after answering a quiz question is not implemented, and ARIA labels are missing on several interactive elements.
-10. **Prettier but no linting** — there is no ESLint config, so code-style issues beyond formatting are not caught automatically.
+1. **No test coverage** — no unit or integration tests exist. Adding Vitest (Vite-native) is the preferred path if tests are introduced. The extracted `quizUtils.js` is now pure and test-ready.
+2. **Giant CSS template string** — all styles live in one unscoped template literal in `App.jsx`. There is no CSS nesting, no auto-prefixing beyond Vite's defaults, and no dead-code elimination for unused rules.
+3. **Hardcoded lesson filters** — filter values like `["all", "1", "2"]` are duplicated in `Overview` and `Quiz`. A single source of truth would prevent drift.
+4. **Silent edge case in quiz generation** — `getWrongOptions()` can return fewer than 2 distractors if the filtered pool has < 3 items. This is not surfaced to the user.
+5. **No persistent storage** — progress and scores are lost on every reload. A `localStorage` layer has been discussed but not implemented.
+6. **Keys derived from content** — `opt.char + opt.rom` is used as a React key in `Quiz`. This is currently safe because the tuple is unique, but it is brittle if duplicates are ever introduced.
+7. **No runtime error boundaries** — an unhandled exception will crash the entire app (white screen) because there is no `<ErrorBoundary>`.
+8. **Accessibility gaps** — focus management after answering a quiz question is not implemented, and ARIA labels are missing on several interactive elements.
+9. **Prettier but no linting** — there is no ESLint config, so code-style issues beyond formatting are not caught automatically.
 
 ---
 
