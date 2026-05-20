@@ -5,7 +5,11 @@ import { getWrongOptions, pickWeighted, shuffle } from "../quizUtils.js";
 // Quiz für Hiragana-Wörter
 // mode: "char2rom" = zeige Hiragana-Wort, wähle Aussprache
 //       "rom2char" = zeige Aussprache, wähle Hiragana-Wort
-export default function WordQuiz({ mode, wrongCounts, onWrong }) {
+//
+// wrongCounts    – shared miss map from App (keyed by `item.word`)
+// onRegisterMiss – callback to App that increments the miss counter,
+//                  which increases the probability this word reappears.
+export default function WordQuiz({ mode, wrongCounts, onRegisterMiss }) {
   const [lessonFilter, setLessonFilter] = useState("1");
   const [score, setScore] = useState({ correct: 0, total: 0 });
   const [question, setQuestion] = useState(null);
@@ -20,6 +24,8 @@ export default function WordQuiz({ mode, wrongCounts, onWrong }) {
       : WORD_DATA.filter((w) => w.lesson === Number(lessonFilter));
 
   const makeQuestion = useCallback(() => {
+    // Pick the next question. Words the user missed before get a higher
+    // weight (base 1 + miss count), so they appear more often.
     const correct = pickWeighted(pool, wrongCounts, (item) => item.word);
     const wrongs = getWrongOptions(correct, pool, 2);
     const options = shuffle([correct, ...wrongs]);
@@ -66,7 +72,9 @@ export default function WordQuiz({ mode, wrongCounts, onWrong }) {
       total: s.total + 1,
     }));
     if (!isCorrect) {
-      onWrong(question.correct.word);
+      // Notify App to increase the miss weight for this word.
+      // Higher weight = more likely to be drawn again in future questions.
+      onRegisterMiss(question.correct.word);
     }
   };
 

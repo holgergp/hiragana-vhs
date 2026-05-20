@@ -97,7 +97,7 @@ If you change styles, keep the existing visual language (dark, minimal, gold acc
 1. **Quiz wrong options** — `getWrongOptions()` picks 2 distractors from the same filtered pool. Always ensure the pool has ≥ 3 items or the function will silently return fewer options.
 2. **Score reset on filter change** — changing the lesson filter inside a quiz resets the score to zero and generates a new question.
 3. **Shuffle uses Fisher-Yates** — questions and options are shuffled in-place on a copy of the array.
-4. **Weighted quiz selection** — `pickWeighted()` uses a `wrongCounts` map (key → number of misses). Each miss adds +1 to the weight, so a character with 2 wrong answers is 3× as likely to appear as an unmissed one. Weights are shared across both quiz directions (`char2rom` and `rom2char`).
+4. **Weighted quiz selection ("Spaced-Repetition light")** — When the user answers incorrectly, the component calls `onRegisterMiss(key)`, which increments a counter in the shared `wrongCounts` map held by `App`. Before drawing the next question, `pickWeighted()` assigns every item a base weight of `1` plus its current miss count. A character missed twice therefore has weight `3` vs. `1` for an unmissed character, making it three times more likely to appear again. The map is shared across all four quiz tabs, so a miss in *Aussprache → Zeichen* also raises the priority in *Zeichen → Aussprache*. `Quiz` keys the map by `item.char`; `WordQuiz` keys it by `item.word`, so the two pools never interfere.
 5. **No persistent storage** — scores and `wrongCounts` are lost on page reload (by design, for now).
 
 ---
