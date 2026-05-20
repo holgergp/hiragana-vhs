@@ -391,9 +391,17 @@ function Overview() {
 // ── App ──────────────────────────────────────────────────────────────────────
 export default function App() {
   const [tab, setTab] = useState("overview");
+  /**
+   * wrongCounts: map of item key → number of times the user answered incorrectly.
+   * Keys are `char` for Hiragana-Zeichen (Quiz) and `word` for Wörter (WordQuiz).
+   * These counts act as extra "weight" in `pickWeighted`, making missed items more
+   * likely to reappear. Shared across all quiz tabs so that practicing
+   * Zeichen → Aussprache also benefits from misses in Aussprache → Zeichen.
+   */
   const [wrongCounts, setWrongCounts] = useState({});
 
-  const handleWrong = (key) => {
+  /** Increments the miss counter for a given key. Called by Quiz / WordQuiz. */
+  const registerMiss = (key) => {
     setWrongCounts((prev) => ({
       ...prev,
       [key]: (prev[key] || 0) + 1,
@@ -430,17 +438,20 @@ export default function App() {
         </nav>
 
         {tab === "overview" && <Overview />}
+        {/* Pass the shared miss map and the registration callback down to every quiz.
+            Both Quiz and WordQuiz use it to bias question selection toward previously
+            missed items. Keys never collide because Quiz uses `char` and WordQuiz uses `word`. */}
         {tab === "quiz-char" && (
-          <Quiz key="char2rom" mode="char2rom" wrongCounts={wrongCounts} onWrong={handleWrong} />
+          <Quiz key="char2rom" mode="char2rom" wrongCounts={wrongCounts} onRegisterMiss={registerMiss} />
         )}
         {tab === "quiz-rom" && (
-          <Quiz key="rom2char" mode="rom2char" wrongCounts={wrongCounts} onWrong={handleWrong} />
+          <Quiz key="rom2char" mode="rom2char" wrongCounts={wrongCounts} onRegisterMiss={registerMiss} />
         )}
         {tab === "quiz-word-char" && (
-          <WordQuiz key="word-char2rom" mode="char2rom" wrongCounts={wrongCounts} onWrong={handleWrong} />
+          <WordQuiz key="word-char2rom" mode="char2rom" wrongCounts={wrongCounts} onRegisterMiss={registerMiss} />
         )}
         {tab === "quiz-word-rom" && (
-          <WordQuiz key="word-rom2char" mode="rom2char" wrongCounts={wrongCounts} onWrong={handleWrong} />
+          <WordQuiz key="word-rom2char" mode="rom2char" wrongCounts={wrongCounts} onRegisterMiss={registerMiss} />
         )}
       </div>
     </>
