@@ -193,10 +193,11 @@ const css = `
     font-family: 'Noto Sans JP', sans-serif;
     background: #0d0d0f;
     color: #e8e4dc;
-    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
   }
 
-  .app { max-width: 900px; margin: 0 auto; padding: 2rem 1rem 4rem; }
+  .app { max-width: 900px; margin: 0 auto; padding: 2rem 1rem 4rem; min-height: 100dvh; }
 
   .header {
     text-align: center;
@@ -468,6 +469,47 @@ const css = `
   }
   .opt-word {
     font-size: 22px;
+  }
+
+  @media (max-width: 480px) {
+    .app { padding: 1rem 0.75rem calc(1rem + env(safe-area-inset-bottom)); }
+    .header { margin-bottom: 1.25rem; padding-bottom: 1rem; }
+    .header-title { font-size: 1.8rem; }
+    .header-eyebrow { font-size: 10px; margin-bottom: 0.3rem; }
+    .header-sub { font-size: 12px; margin-top: 0.3rem; }
+    .nav {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      margin-bottom: 1.25rem;
+      padding: 4px;
+      gap: 4px;
+    }
+    .nav::-webkit-scrollbar { display: none; }
+    .nav-btn { flex: 0 0 auto; min-width: 100px; padding: 8px 10px; font-size: 11px; border-radius: 6px; }
+    .lesson-filter { margin-bottom: 1rem; gap: 6px; }
+    .filter-pill { padding: 4px 10px; font-size: 11px; }
+    .quiz-score-bar { margin-bottom: 1rem; }
+    .quiz-card { padding: 1.5rem 1rem; margin-bottom: 1rem; border-radius: 16px; }
+    .quiz-big-char { font-size: 72px; }
+    .quiz-big-rom { font-size: 40px; }
+    .quiz-big-word { font-size: 2rem; }
+    .quiz-sub-label { font-size: 12px; }
+    .options-grid { gap: 6px; }
+    .opt-btn { padding: 12px 16px; font-size: 16px; border-radius: 10px; }
+    .opt-char { font-size: 24px; }
+    .opt-rom { font-size: 14px; }
+    .opt-word { font-size: 18px; }
+    .next-btn { margin-top: 1rem; padding: 10px 24px; }
+    .quiz-feedback { margin-top: 0.75rem; }
+    .section { margin-bottom: 1.25rem; }
+    .hira-grid { grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); gap: 5px; }
+    .hira-card { padding: 10px 6px 8px; }
+    .hira-char { font-size: 24px; }
+    .hira-rom { font-size: 10px; }
+    .countdown-placeholder { padding: 12px 16px; font-size: 14px; min-height: 44px; }
+    .lesson-filter-quiz { margin-bottom: 1rem; gap: 6px; }
   }
 `;
 
