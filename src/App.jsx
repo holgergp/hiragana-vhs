@@ -332,56 +332,56 @@ const css = `
     .lesson-filter-quiz { margin-bottom: 1rem; gap: 6px; }
   }
 
-  /* Chōon & Sokuon Info Cards */
-  .choon-info-card, .sokuon-info-card {
+  /* Chōon, Sokuon & Yōon Info Cards */
+  .choon-info-card, .sokuon-info-card, .yoon-info-card {
     background: rgba(255,255,255,0.02);
     border: 1px solid rgba(184,134,11,0.2);
     border-radius: 16px;
     padding: 1.5rem;
     margin-top: 2rem;
   }
-  .choon-title, .sokuon-title {
+  .choon-title, .sokuon-title, .yoon-title {
     font-family: 'DM Serif Display', serif;
     font-size: 20px;
     color: #b8860b;
     margin-bottom: 0.75rem;
   }
-  .choon-intro, .sokuon-intro {
+  .choon-intro, .sokuon-intro, .yoon-intro {
     font-size: 13px;
     color: #a8a4bc;
     line-height: 1.6;
     margin-bottom: 1.25rem;
   }
-  .choon-table-container, .sokuon-table-container {
+  .choon-table-container, .sokuon-table-container, .yoon-table-container {
     overflow-x: auto;
   }
-  .choon-table, .sokuon-table {
+  .choon-table, .sokuon-table, .yoon-table {
     width: 100%;
     border-collapse: collapse;
     font-size: 13px;
     text-align: left;
     min-width: 500px;
   }
-  .choon-table th, .choon-table td, .sokuon-table th, .sokuon-table td {
+  .choon-table th, .choon-table td, .sokuon-table th, .sokuon-table td, .yoon-table th, .yoon-table td {
     padding: 10px 12px;
     border-bottom: 1px solid rgba(255,255,255,0.05);
   }
-  .choon-table th, .sokuon-table th {
+  .choon-table th, .sokuon-table th, .yoon-table th {
     color: #888;
     font-weight: 500;
     text-transform: uppercase;
     font-size: 11px;
     letter-spacing: 0.05em;
   }
-  .choon-table td, .sokuon-table td {
+  .choon-table td, .sokuon-table td, .yoon-table td {
     color: #c8c4bc;
   }
-  .choon-hira, .sokuon-hira {
+  .choon-hira, .sokuon-hira, .yoon-hira {
     color: #b8860b;
     font-size: 16px;
     font-weight: 500;
   }
-  .choon-note, .sokuon-note {
+  .choon-note, .sokuon-note, .yoon-note {
     font-size: 10px;
     color: #666;
     display: inline-block;
@@ -551,6 +551,64 @@ function Overview() {
                 <td><span className="sokuon-hira">っ</span> + ぱ/ぴ/ぷ/ぺ/ぽ</td>
                 <td>Doppeltes <strong>pp</strong></td>
                 <td>き<strong>っ</strong>ぷ (ki<strong>pp</strong>u - Ticket), い<strong>っ</strong>ぱい (i<strong>pp</strong>ai - voll/viel)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Besonderheit: Verbindungsschreibweisen (Yōon) */}
+      <div className="yoon-info-card">
+        <div className="yoon-title">Verbindungsschreibweisen (Yōon · 拗音)</div>
+        <p className="yoon-intro">
+          Yōon sind Gleitlaute, die durch die Kombination eines Hiragana-Zeichens der <strong>i-Reihe</strong> (z.B. き, し, ち, に, ひ, み, り, ぎ, じ, び, ぴ) mit einem verkleinerten <strong>ゃ</strong> (ya), <strong>ゅ</strong> (yu) oder <strong>ょ</strong> (yo) gebildet werden. Beide Zeichen verschmelzen zu einer einzigen Silbe (z.B. き + ゃ = kya, nicht ki-ya).
+        </p>
+        <div className="yoon-table-container">
+          <table className="yoon-table">
+            <thead>
+              <tr>
+                <th>Basis-Zeichen (i-Reihe)</th>
+                <th>Kombination mit ゃ (ya)</th>
+                <th>Kombination mit ゅ (yu)</th>
+                <th>Kombination mit ょ (yo)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>き (ki) / ぎ (gi)</strong></td>
+                <td>きゃ (kya) / ぎゃ (gya)</td>
+                <td>きゅ (kyu) / ぎゅ (gyu)</td>
+                <td>きょ (kyo) / ぎょ (gyo)</td>
+              </tr>
+              <tr>
+                <td><strong>し (shi) / じ (ji)</strong></td>
+                <td>しゃ (sha) / じゃ (ja)</td>
+                <td>しゅ (shu) / じゅ (ju)</td>
+                <td>しょ (sho) / じょ (jo)</td>
+              </tr>
+              <tr>
+                <td><strong>ち (chi)</strong></td>
+                <td>ちゃ (cha)</td>
+                <td>ちゅ (chu)</td>
+                <td>ちょ (cho)</td>
+              </tr>
+              <tr>
+                <td><strong>に (ni) / り (ri)</strong></td>
+                <td>にゃ (nya) / りゃ (rya)</td>
+                <td>にゅ (nyu) / りゅ (ryu)</td>
+                <td>にょ (nyo) / りょ (ryo)</td>
+              </tr>
+              <tr>
+                <td><strong>ひ (hi) / び (bi) / ぴ (pi)</strong></td>
+                <td>ひゃ (hya) / びゃ (bya) / ぴゃ (pya)</td>
+                <td>ひゅ (hyu) / びゅ (byu) / ぴゅ (pyu)</td>
+                <td>ひょ (hyo) / びょ (byo) / ぴょ (pyo)</td>
+              </tr>
+              <tr>
+                <td><strong>み (mi)</strong></td>
+                <td>みゃ (mya)</td>
+                <td>みゅ (myu)</td>
+                <td>みょ (myo)</td>
               </tr>
             </tbody>
           </table>

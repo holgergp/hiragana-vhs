@@ -189,6 +189,21 @@ export const WORD_DATA = [
   { word: "やっつ", rom: "yattsu", german: "acht (Dinge)", lesson: 4 },
   { word: "おっと", rom: "otto", german: "(eigener) Ehemann", lesson: 4 },
   { word: "いっぱい", rom: "ippai", german: "voll / viel", lesson: 4 },
+  // Lektion 5 — Verbindungsschreibweisen (Yōon)
+  { word: "かいしゃ", rom: "kaisha", german: "Firma / Unternehmen", lesson: 5 },
+  { word: "しゃしん", rom: "shashin", german: "Foto", lesson: 5 },
+  { word: "じゅう", rom: "juu", german: "zehn", lesson: 5 },
+  { word: "ひゃく", rom: "hyaku", german: "hundert", lesson: 5 },
+  { word: "さんびゃく", rom: "sanbyaku", german: "dreihundert", lesson: 5 },
+  { word: "ろっぴゃく", rom: "roppyaku", german: "sechshundert", lesson: 5 },
+  { word: "はっぴゃく", rom: "happyaku", german: "achthundert", lesson: 5 },
+  { word: "きょうしつ", rom: "kyoushitsu", german: "Klassenzimmer", lesson: 5 },
+  { word: "じどうしゃ", rom: "jidousha", german: "Auto", lesson: 5 },
+  { word: "じむしょ", rom: "jimusho", german: "Büro", lesson: 5 },
+  { word: "りょこう", rom: "ryokou", german: "Reise", lesson: 5 },
+  { word: "びょういん", rom: "byouin", german: "Krankenhaus", lesson: 5 },
+  { word: "おちゃ", rom: "ocha", german: "Tee / grüner Tee", lesson: 5 },
+  { word: "しゅくだい", rom: "shukudai", german: "Hausaufgaben", lesson: 5 },
 ];
 
 export const GROUP_LABELS = {
