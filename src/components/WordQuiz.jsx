@@ -86,7 +86,7 @@ export default function WordQuiz({ mode, wrongCounts, onRegisterMiss }) {
   return (
     <div className="quiz-wrap">
       <div className="lesson-filter-quiz">
-        {["1", "all"].map((l) => (
+        {["1", "2", "3", "4", "all"].map((l) => (
           <button
             key={l}
             className={`filter-pill ${lessonFilter === l ? "active" : ""}`}
@@ -96,7 +96,15 @@ export default function WordQuiz({ mode, wrongCounts, onRegisterMiss }) {
               setScore({ correct: 0, total: 0 });
             }}
           >
-            {l === "1" ? "Lektion 1" : "Alle Wörter"}
+            {l === "1"
+              ? "Lektion 1"
+              : l === "2"
+                ? "Lektion 2"
+                : l === "3"
+                  ? "Lektion 3 (Lange Vokale)"
+                  : l === "4"
+                    ? "Lektion 4 (Doppelkonsonanten)"
+                    : "Alle Wörter"}
           </button>
         ))}
       </div>
