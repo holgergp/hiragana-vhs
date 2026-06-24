@@ -21,7 +21,7 @@ export default function WordQuiz({ mode, wrongCounts, onRegisterMiss }) {
   const pool =
     lessonFilter === "all"
       ? WORD_DATA
-      : WORD_DATA.filter((w) => w.lesson === Number(lessonFilter));
+      : WORD_DATA.filter((w) => w.lesson <= Number(lessonFilter));
 
   const makeQuestion = useCallback(() => {
     // Pick the next question. Words the user missed before get a higher
@@ -99,13 +99,13 @@ export default function WordQuiz({ mode, wrongCounts, onRegisterMiss }) {
             {l === "1"
               ? "Lektion 1"
               : l === "2"
-                ? "Lektion 2"
+                ? "Lektion 1+2"
                 : l === "3"
-                  ? "Lektion 3 (Lange Vokale)"
+                  ? "Lektion 1-3 (Lange Vokale)"
                   : l === "4"
-                    ? "Lektion 4 (Doppelkonsonanten)"
+                    ? "Lektion 1-4 (Doppelkonsonanten)"
                     : l === "5"
-                      ? "Lektion 5 (Gleitlaute / Yōon)"
+                      ? "Lektion 1-5 (Gleitlaute / Yōon)"
                       : "Alle Wörter"}
           </button>
         ))}

@@ -50,16 +50,33 @@ Built as a companion for the **VHS Düsseldorf** Japanese course **A1.1.1** usin
 
 ## Data Model
 
-Hiragana characters are stored as a flat array `HIRAGANA_DATA` in `data.js`:
+The app distinguishes between two datasets in `data.js`:
 
-```js
-{ char: "あ", rom: "a", group: "vowels", lesson: 1 }
-```
+1. **`HIRAGANA_DATA`** — Individual character data:
+   ```js
+   { char: "あ", rom: "a", group: "vowels", lesson: 1 }
+   ```
+   * `char` — the Hiragana character
+   * `rom` — Hepburn romanization (e.g. "shi", "tsu", "fu")
+   * `group` — the row key (e.g. "k", "s", "t", "g", "z", ...)
+   * `lesson` — `1` (basic characters) or `2` (dakuten / handakuten)
 
-- `char` — the Hiragana character
-- `rom` — Hepburn romanization (e.g. "shi", "tsu", "fu")
-- `group` — the row key (e.g. "k", "s", "t", "g", "z", ...)
-- `lesson` — `1` (basic characters) or `2` (dakuten / handakuten)
+2. **`WORD_DATA`** — Words used in vocabulary quizzes:
+   ```js
+   { word: "すみません", rom: "sumimasen", german: "Entschuldigung / Tut mir leid", lesson: 1 }
+   ```
+   * `word` — the word written in Hiragana
+   * `rom` — Hepburn romanization
+   * `german` — German translation
+   * `lesson` — `1` to `5`
+
+### Lesson Structure & Phonetic Rules
+Lessons are split into two categories:
+* **Lessons 1 & 2 (Characters & Words):** Focus on learning standalone characters (`HIRAGANA_DATA` is restricted to these lessons).
+* **Lessons 3, 4 & 5 (Words only):** Focus on Japanese spelling/phonetic rules which only manifest in complete words (`WORD_DATA` only):
+  * **Lesson 3:** Lange Vokale (Chōon) — elongated vowels (e.g. `aa`, `ou`)
+  * **Lesson 4:** Doppelkonsonanten (Sokuon) — double consonants using a small `っ`
+  * **Lesson 5:** Verbindungsschreibweisen (Yōon) — glide sounds using a small `ゃ`, `ゅ`, or `ょ`
 
 `GROUP_LABELS` maps group keys to German + Japanese labels (e.g. `k: "か行 (K)"`).
 
