@@ -21,7 +21,7 @@ export default function Quiz({ mode, wrongCounts, onRegisterMiss }) {
   const pool =
     lessonFilter === "all"
       ? HIRAGANA_DATA
-      : HIRAGANA_DATA.filter((h) => h.lesson === Number(lessonFilter));
+      : HIRAGANA_DATA.filter((h) => h.lesson <= Number(lessonFilter));
 
   const makeQuestion = useCallback(() => {
     // Pick the next question. Characters the user missed before get a higher
