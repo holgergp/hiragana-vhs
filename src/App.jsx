@@ -726,7 +726,9 @@ export default function App() {
   const [wrongCounts, setWrongCounts] = useState({});
 
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem("theme") || "dark";
+    const saved = localStorage.getItem("theme");
+    if (saved) return saved;
+    return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
   });
 
   useEffect(() => {
